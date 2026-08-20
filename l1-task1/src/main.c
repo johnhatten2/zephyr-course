@@ -43,6 +43,7 @@ void t_coop_fn(void *arg1, void *arg2, void *arg3)
 		LOG_INF("[T_COOP] Iteration %d", i + 1);
 		/* Busy work */
 		k_busy_wait(500000);
+        k_yield();
 	}
 
 	LOG_INF("[T_COOP] Yielding");
@@ -50,10 +51,27 @@ void t_coop_fn(void *arg1, void *arg2, void *arg3)
 	LOG_INF("[T_COOP] Exiting");
 }
 
+void t_coop2_fn(void *arg1, void *arg2, void *arg3)
+{
+	LOG_INF("[T_COOP2] Start - Priority: %d", k_thread_priority_get(k_current_get()));
+
+	for (int i = 0; i < 5; i++) {
+		LOG_INF("[T_COOP2] Iteration %d", i + 1);
+		/* Busy work */
+		k_busy_wait(500000);
+        k_yield();
+	}
+
+	LOG_INF("[T_COOP2] Yielding");
+	k_yield();
+	LOG_INF("[T_COOP2] Exiting");
+}
+
 K_THREAD_DEFINE(thread_1, STACK_SIZE, t_low_fn, NULL, NULL, NULL, 7, 0, 0);
 K_THREAD_DEFINE(thread_2, STACK_SIZE, t_med_fn, NULL, NULL, NULL, 5, 0, 0);
 K_THREAD_DEFINE(thread_3, STACK_SIZE, t_high_fn, NULL, NULL, NULL, 3, 0, 0);
 K_THREAD_DEFINE(thread_4, STACK_SIZE, t_coop_fn, NULL, NULL, NULL, -1, 0, 0);
+K_THREAD_DEFINE(thread_5, STACK_SIZE, t_coop2_fn, NULL, NULL, NULL, -2, 0, 0);
 
 int main(void)
 {
