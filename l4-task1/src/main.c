@@ -6,7 +6,7 @@ LOG_MODULE_REGISTER(demo, LOG_LEVEL_DBG);
 
 #define STACK_SIZE       2048
 #define SENSOR_COUNT       18
-#define SENSOR_PERIOD_MS  150
+#define SENSOR_PERIOD_MS  100
 #define TEMP_ALARM_MC   27000
 
 /* ================================================================== */
