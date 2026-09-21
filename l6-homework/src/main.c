@@ -5,10 +5,11 @@
 LOG_MODULE_REGISTER(homework, LOG_LEVEL_INF);
 
 #define STACK_SIZE            2048
-#define CONTROL_PRIORITY         7
+#define CONTROL_PRIORITY         3
 #define MAINTENANCE_PRIORITY     4
 #define EVENT_PERIOD_MS        250
 #define MAINTENANCE_LOAD_US  45000
+#define EVENT_RESPONSE_TIME_GARANTEE_MS  10
 
 struct control_event {
     uint32_t seq;
@@ -42,7 +43,7 @@ static void event_timer_expiry(struct k_timer *timer)
     /* Both threads become ready when the timer interrupt returns. */
     k_sem_give(&maintenance_start);
 
-    /* TODO: Add an application trace event for this sequence. */
+    sys_trace_named_event("event_timer_expiry ends", event.seq, k_msgq_num_used_get(&control_queue));
 }
 
 K_TIMER_DEFINE(event_timer, event_timer_expiry, NULL);
@@ -55,6 +56,8 @@ static void control_fn(void *p1, void *p2, void *p3)
 {
     ARG_UNUSED(p1); ARG_UNUSED(p2); ARG_UNUSED(p3);
 
+    int late_count = 0;
+
     while (true) {
         struct control_event event;
         int ret = k_msgq_get(&control_queue, &event, K_FOREVER);
@@ -64,12 +67,21 @@ static void control_fn(void *p1, void *p2, void *p3)
             continue;
         }
 
-        LOG_INF("[CONTROL] processed seq=%u", event.seq);
+        uint32_t now = k_uptime_get_32();
+        uint32_t latency = now - event.ready_ms;
 
-        /* TODO: Define a response-time guarantee. */
-        /* TODO: Measure latency and count every deadline miss. */
-        /* TODO: Rate-limit repeated warning messages. */
-        /* TODO: Add an application trace event for completion. */
+        LOG_INF("[CONTROL] processed seq=%u latency=%u", event.seq, latency);
+
+        if (latency > EVENT_RESPONSE_TIME_GARANTEE_MS) {
+            late_count++;
+
+            /* TODO: Rate-limit repeated warning messages. */
+            /* Should be LOG_WRN_RATELIMIT which was not available in zephyr 4.2 */
+            LOG_WRN("[CONTROL] seq=%u latency=%u exceeds %u ms guarantee (late count=%d)",
+                event.seq, latency, EVENT_RESPONSE_TIME_GARANTEE_MS, late_count);
+        }
+
+        sys_trace_named_event("event_processed", event.seq, k_msgq_num_used_get(&control_queue));
     }
 }
 
