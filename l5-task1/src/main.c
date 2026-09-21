@@ -13,6 +13,7 @@ LOG_MODULE_REGISTER(homework, LOG_LEVEL_DBG);
 #define NB_SAMPLES               25
 #define SENSOR_QUEUE_DEPTH       10
 
+K_SEM_DEFINE(sensor_producer_gate, 1, 1);
 K_MSGQ_DEFINE(sensor_msgq, sizeof(int), SENSOR_QUEUE_DEPTH, 4);
 
 /* Statistics */
@@ -87,6 +88,8 @@ static void sensor_sim(void *p1, void *p2, void *p3)
     LOG_INF("[SENSOR] Generating %d samples", NB_SAMPLES);
 
     for (int i = 0; i < NB_SAMPLES; i++) {
+        k_sem_take(&sensor_producer_gate, K_FOREVER);
+
         total_events++;
         int event_id = total_events;
 
@@ -97,9 +100,73 @@ static void sensor_sim(void *p1, void *p2, void *p3)
             LOG_ERR("[SENSOR] k_msgq_put failed: %d", ret);
         }
 
+        k_sem_give(&sensor_producer_gate);
+
         k_msleep(PRODUCER_SLEEP_TIME);
     }
 
     LOG_INF("[SENSOR] Ended successfully");
 }
 K_THREAD_DEFINE(sensor_sim_thread,  STACK_SIZE, sensor_sim, NULL, NULL, NULL, 5, 0, 0);
+
+static void sensor_pending_watcher(void *p1, void *p2, void *p3)
+{
+    ARG_UNUSED(p1);
+    ARG_UNUSED(p2);
+    ARG_UNUSED(p3);
+
+    enum sensor_monitor_state_level {
+        STATE_NORMAL_LEVEL = 0,
+        STATE_WARNING_LEVEL = 7,
+        STATE_CRITICAL_LEVEL = 9,
+    };
+
+    enum sensor_monitor_state {
+        STATE_NORMAL,
+        STATE_WARNING,
+        STATE_CRITICAL,
+    };
+
+    int pending = 0;
+    enum sensor_monitor_state prev_state = STATE_NORMAL, state = STATE_NORMAL;
+
+    while (true) {
+        pending = k_msgq_num_used_get(&sensor_msgq);
+
+        prev_state = state;
+
+        switch (state) {
+        case STATE_NORMAL:
+            if (pending >= STATE_WARNING_LEVEL) {
+                state = STATE_WARNING;
+                LOG_INF("[WATCHER] state WARNING (%d pending)", pending);
+            }
+            if (pending >= STATE_CRITICAL_LEVEL) {
+                state = STATE_CRITICAL;
+                LOG_INF("[WATCHER] state CRITICAL (%d pending)", pending);
+                k_sem_take(&sensor_producer_gate, K_FOREVER);
+            }
+            break;
+
+        case STATE_WARNING:
+            if (pending >= STATE_CRITICAL_LEVEL) {
+                state = STATE_CRITICAL;
+                LOG_INF("[WATCHER] state CRITICAL (%d pending)", pending);
+                k_sem_take(&sensor_producer_gate, K_FOREVER);
+            }
+
+            // Fallthrough
+
+        case STATE_CRITICAL:
+            if (pending == STATE_NORMAL_LEVEL) {
+                state = STATE_NORMAL;
+                LOG_INF("[WATCHER] state back to NORMAL (queue drained)");
+                k_msleep(200);
+                k_sem_give(&sensor_producer_gate);
+            }
+        }
+
+        k_msleep(10);
+    }
+}
+K_THREAD_DEFINE(sensor_pending_thread,  STACK_SIZE, sensor_pending_watcher, NULL, NULL, NULL, 5, 0, 0);
