@@ -31,7 +31,7 @@ static int custom_sensor_channel_get(const struct device *dev, enum sensor_chann
 	val->val1 = sim_temperature;
 	val->val2 = 0;
 
-	return 0;
+	return fake_sensor_channel_get_fake.return_val;
 }
 
 /* ---- Fake sensor device -------------------------------------------------- */
