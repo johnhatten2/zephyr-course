@@ -7,10 +7,10 @@ target_sources(app PRIVATE
     src/sensor_fake.c
     src/test_basic.c
     src/test_error_paths.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../app/modules/temp_alarm/src/temp_alarm.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../l8-homework/modules/temp_alarm/src/temp_alarm.c
 )
 
 target_include_directories(app PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../app/modules/temp_alarm/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../l8-homework/modules/temp_alarm/include
     include
 )
