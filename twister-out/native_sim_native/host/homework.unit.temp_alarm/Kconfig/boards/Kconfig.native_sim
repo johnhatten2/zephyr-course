@@ -1,0 +1,2 @@
+# Load board Kconfig descriptions.
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/boards/native/native_sim/Kconfig.native_sim"

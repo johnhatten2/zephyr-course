@@ -1,0 +1,50 @@
+cmake:
+  application:
+    configuration-dir: '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/tests/temp_alarm'
+    source-dir: '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/tests/temp_alarm'
+  board:
+    name: 'native_sim'
+    path:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/boards/native/native_sim'
+    qualifiers: 'native'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/bindings'
+    files:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/boards/native/native_sim/native_sim.dts'
+    include-dirs:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/modules/hal/nxp/dts'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/modules/hal/stm32/dts'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/tests/temp_alarm/include'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/include'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/include/zephyr'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/common'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/vendor'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/rx'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/x86'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/xtensa'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/sparc'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/riscv'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/posix'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/arm64'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/arm'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts/arc'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/dts'
+  kconfig:
+    extra-user-files:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/twister-out/native_sim_native/host/homework.unit.temp_alarm.ordered/twister/testsuite_extra.conf'
+    files:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/boards/native/native_sim/native_sim_defconfig'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/tests/temp_alarm/prj.conf'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/twister-out/native_sim_native/host/homework.unit.temp_alarm.ordered/twister/testsuite_extra.conf'
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/twister-out/native_sim_native/host/homework.unit.temp_alarm.ordered/zephyr/misc/generated/extra_kconfig_options.conf'
+    user-files:
+     - '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/zephyr-course/tests/temp_alarm/prj.conf'
+  toolchain:
+    name: 'host'
+    path: ''
+  zephyr:
+    version: '4.2.0'
+    zephyr-base: '/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr'
+version: '0.1.0'

@@ -1,0 +1,11 @@
+# Load Zephyr Arch Kconfig descriptions.
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/rx/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/x86/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/xtensa/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/sparc/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/riscv/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/posix/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/mips/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/arm64/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/arm/Kconfig"
+osource "/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/zephyr/arch/arc/Kconfig"

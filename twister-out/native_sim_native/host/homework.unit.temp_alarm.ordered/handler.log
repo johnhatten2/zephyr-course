@@ -1,0 +1,115 @@
+*** Booting Zephyr OS build v4.2.0 ***
+Running TESTSUITE temp_alarm_check
+===================================================================
+START - test_above_threshold
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <wrn> temp_alarm: Alarm! temp=40 > threshold=30
+ PASS - test_above_threshold in 0.000 seconds
+===================================================================
+START - test_at_threshold
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_at_threshold in 0.000 seconds
+===================================================================
+START - test_below_threshold
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_below_threshold in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_check succeeded
+Running TESTSUITE temp_alarm_get_status
+===================================================================
+START - test_status_after_init
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_status_after_init in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_get_status succeeded
+Running TESTSUITE temp_alarm_invalid_input
+===================================================================
+START - test_get_status_null
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_get_status_null in 0.000 seconds
+===================================================================
+START - test_init_threshold_out_of_range
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_init_threshold_out_of_range in 0.000 seconds
+===================================================================
+START - test_init_without_device
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <err> temp_alarm: Sensor device is not ready
+ PASS - test_init_without_device in 0.000 seconds
+===================================================================
+START - test_set_threshold_out_of_range
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+ PASS - test_set_threshold_out_of_range in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_invalid_input succeeded
+Running TESTSUITE temp_alarm_reset
+===================================================================
+START - test_reset_clears_state
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <wrn> temp_alarm: Alarm! temp=40 > threshold=30
+[00:00:00.000,000] <wrn> temp_alarm: Alarm! temp=40 > threshold=30
+[00:00:00.000,000] <wrn> temp_alarm: Alarm! temp=40 > threshold=30
+[00:00:00.000,000] <inf> temp_alarm: Alarm state reset
+ PASS - test_reset_clears_state in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_reset succeeded
+Running TESTSUITE temp_alarm_sensor_errors
+===================================================================
+START - test_channel_get_error_propagates
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <err> temp_alarm: Sensor channel get failed: -5
+ PASS - test_channel_get_error_propagates in 0.000 seconds
+===================================================================
+START - test_fail_then_recover
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <err> temp_alarm: Sensor fetch failed: -5
+ PASS - test_fail_then_recover in 0.000 seconds
+===================================================================
+START - test_fetch_error_propagates
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <err> temp_alarm: Sensor fetch failed: -5
+ PASS - test_fetch_error_propagates in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_sensor_errors succeeded
+Running TESTSUITE temp_alarm_threshold
+===================================================================
+START - test_new_threshold_clears_alarm
+[00:00:00.000,000] <inf> temp_alarm: Temperature alarm initialized (threshold=30 C)
+[00:00:00.000,000] <wrn> temp_alarm: Alarm! temp=40 > threshold=30
+[00:00:00.000,000] <inf> temp_alarm: Threshold updated to 50 C
+ PASS - test_new_threshold_clears_alarm in 0.000 seconds
+===================================================================
+TESTSUITE temp_alarm_threshold succeeded
+
+------ TESTSUITE SUMMARY START ------
+
+SUITE PASS - 100.00% [temp_alarm_check]: pass = 3, fail = 0, skip = 0, total = 3 duration = 0.000 seconds
+ - PASS - [temp_alarm_check.test_above_threshold] duration = 0.000 seconds
+ - PASS - [temp_alarm_check.test_at_threshold] duration = 0.000 seconds
+ - PASS - [temp_alarm_check.test_below_threshold] duration = 0.000 seconds
+
+SUITE PASS - 100.00% [temp_alarm_get_status]: pass = 1, fail = 0, skip = 0, total = 1 duration = 0.000 seconds
+ - PASS - [temp_alarm_get_status.test_status_after_init] duration = 0.000 seconds
+
+SUITE PASS - 100.00% [temp_alarm_invalid_input]: pass = 4, fail = 0, skip = 0, total = 4 duration = 0.000 seconds
+ - PASS - [temp_alarm_invalid_input.test_get_status_null] duration = 0.000 seconds
+ - PASS - [temp_alarm_invalid_input.test_init_threshold_out_of_range] duration = 0.000 seconds
+ - PASS - [temp_alarm_invalid_input.test_init_without_device] duration = 0.000 seconds
+ - PASS - [temp_alarm_invalid_input.test_set_threshold_out_of_range] duration = 0.000 seconds
+
+SUITE PASS - 100.00% [temp_alarm_reset]: pass = 1, fail = 0, skip = 0, total = 1 duration = 0.000 seconds
+ - PASS - [temp_alarm_reset.test_reset_clears_state] duration = 0.000 seconds
+
+SUITE PASS - 100.00% [temp_alarm_sensor_errors]: pass = 3, fail = 0, skip = 0, total = 3 duration = 0.000 seconds
+ - PASS - [temp_alarm_sensor_errors.test_channel_get_error_propagates] duration = 0.000 seconds
+ - PASS - [temp_alarm_sensor_errors.test_fail_then_recover] duration = 0.000 seconds
+ - PASS - [temp_alarm_sensor_errors.test_fetch_error_propagates] duration = 0.000 seconds
+
+SUITE PASS - 100.00% [temp_alarm_threshold]: pass = 1, fail = 0, skip = 0, total = 1 duration = 0.000 seconds
+ - PASS - [temp_alarm_threshold.test_new_threshold_clears_alarm] duration = 0.000 seconds
+
+------ TESTSUITE SUMMARY END ------
+
+===================================================================
+RunID: 7539d4f2e7d260fb7dc0506661b37443
+PROJECT EXECUTION SUCCESSFUL

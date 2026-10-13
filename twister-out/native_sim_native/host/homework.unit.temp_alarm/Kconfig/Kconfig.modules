@@ -1,0 +1,30 @@
+menu "cmsis_6 (/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/modules/hal/cmsis_6)"
+osource "$(ZEPHYR_CMSIS_6_KCONFIG)"
+config ZEPHYR_CMSIS_6_MODULE
+	bool
+	default y
+endmenu
+menu "hal_nordic (/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/modules/hal/nordic)"
+osource "$(ZEPHYR_HAL_NORDIC_KCONFIG)"
+config ZEPHYR_HAL_NORDIC_MODULE
+	bool
+	default y
+
+config ZEPHYR_HAL_NORDIC_MODULE_BLOBS
+	bool
+endmenu
+menu "hal_nxp (/home/jonathan/Documents/work/training/iomico-zephyr-intermediate/deps/modules/hal/nxp)"
+osource "$(ZEPHYR_HAL_NXP_KCONFIG)"
+config ZEPHYR_HAL_NXP_MODULE
+	bool
+	default y
+
+config ZEPHYR_HAL_NXP_MODULE_BLOBS
+	bool
+endmenu
+config ZEPHYR_HAL_STM32_MODULE
+	bool
+	default y
+
+config ZEPHYR_HAL_STM32_MODULE_BLOBS
+	bool
